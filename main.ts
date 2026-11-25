@@ -1,14 +1,16 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-// The 3AM Fridge Text — one voice, three moves: the 3am catch, the
-// "tomorrow is now" twist, then the cake-hostage punchline. Each move
-// is its own named constant so the wording stays auditable, and the
-// entry is assembled with single spaces so it is exactly one line.
-const catchLine = "3am. Your diet starts tomorrow, you said.";
-const twistLine = "It is tomorrow now.";
-const punchLine = "I am holding the cake hostage until you decide.";
-const text = catchLine + " " + twistLine + " " + punchLine;
+// The 3AM Fridge Text — one voice, one line. The entry is built from
+// four fragments split mid-sentence (after "tomorrow,", after "now.",
+// after "hostage") instead of at sentence boundaries, so the wording
+// is assembled from parts that only make sense together; the fragments
+// are joined with single spaces so the result is exactly one line.
+const opening = "3am. Your diet starts tomorrow,";
+const callback = "you said. It is tomorrow now.";
+const demand = "I am holding the cake hostage";
+const deadline = "until you decide.";
+const text = opening + " " + callback + " " + demand + " " + deadline;
 
 const outDir = process.env.MAKEFUN_OUTPUT_DIR || "/output";
 mkdirSync(outDir, { recursive: true });
